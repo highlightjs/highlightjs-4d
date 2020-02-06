@@ -1,0 +1,25 @@
+{
+  "name": "highlightjs-4d",
+  "version": "1.0",
+  "description": "highlight.js syntax definition for 4d",
+  "main": "src/4d.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/gkotulski/highlightjs-4d.git"
+  },
+  "keywords": [
+    "4d",
+    "highlight.js",
+    "highlightjs",
+    "syntax"
+  ],
+  "author": "Guillaume kotulski <guillaume.kotulski@4d.com>",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/gkotulski/highlightjs-4d/issues"
+  },
+  "homepage": "https://github.com/gkotulski/highlightjs-4d"
+}
