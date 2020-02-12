@@ -36,7 +36,7 @@ module.exports = function(hljs) {
 
   var NUMBERS = {
     className: 'number',
-    begin: '(0[xX])?[0-9]+(\\.?,?\\^?[eE]?)[0-9]*',
+    begin: '\\b(0[xX])?[0-9]+(\\.?,?\\^?[eE]?)[0-9]*',
   };
 
   var VARIABLE = {
@@ -72,6 +72,7 @@ module.exports = function(hljs) {
   }
 
   var INLINE_COMMENT = hljs.COMMENT('//', '[^\\\\]$');
+  var INLINE_COMMENT_OLD = hljs.COMMENT('`', '[^\\\\]$');
 
   return {
     aliases: [ '4d' ],
@@ -79,13 +80,13 @@ module.exports = function(hljs) {
     contains: [
       INLINE_COMMENT, // single-line comments
       hljs.C_BLOCK_COMMENT_MODE, // comment blocks
+      INLINE_COMMENT_OLD,
       {
         begin: 'Begin SQL', end: 'End SQL',
         subLanguage: 'sql',
         relevance: 0
       },
-      NUMBERS,
-      LITERALS,
+
       DATE,
       HOUR,
       KEYWORDS,
@@ -93,7 +94,9 @@ module.exports = function(hljs) {
       LOCAL_VARIABLE,
       VARIABLE_ARRAY,
       STRINGS,
-      FUNCTIONS
+      FUNCTIONS,
+      NUMBERS,
+      LITERALS,
     ]
   };
 }
