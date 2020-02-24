@@ -31,8 +31,8 @@ If you're using Node / Webpack / Rollup / Browserify, etc, simply require the la
 
 ```javascript
 var hljs = require('highlightjs');
-var hljsRobotsTxt = require('highlightjs-4d');
+var hljs4d = require('highlightjs-4d');
 
-hljs.registerLanguage("4d", hljsRobotsTxt);
+hljs.registerLanguage("4d", hljs4d);
 hljs.initHighlightingOnLoad();
 ```

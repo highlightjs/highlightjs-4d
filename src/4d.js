@@ -18,8 +18,7 @@ module.exports = function(hljs) {
 
   var FUNCTIONS = {
     className: 'function',
-    begin: '([\\w ]+((?=\\()|$))',
-    end: '$|(?!\\w|\\s)'
+    begin: '\\w[\\w ]+\\w(?=\\()',
   }
 
   var DATE = {
@@ -36,7 +35,10 @@ module.exports = function(hljs) {
 
   var NUMBERS = {
     className: 'number',
-    begin: '\\b(0[xX])?[0-9]+(\\.?,?\\^?[eE]?)[0-9]*',
+    variants: [
+      { begin: '(-?)\\b([\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)' },
+      { begin: '(-?)(\\b0[xX][a-fA-F0-9\']+|(\\b[\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)([eE][-+]?[\\d\']+)?)' }
+    ],  
   };
 
   var VARIABLE = {
@@ -94,9 +96,9 @@ module.exports = function(hljs) {
       LOCAL_VARIABLE,
       VARIABLE_ARRAY,
       STRINGS,
-      FUNCTIONS,
       NUMBERS,
       LITERALS,
+      FUNCTIONS,
     ]
   };
 }
