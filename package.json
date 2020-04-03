@@ -1,6 +1,6 @@
 {
   "name": "highlightjs-4d",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "highlight.js syntax definition for 4d",
   "main": "src/4d.js",
   "scripts": {
