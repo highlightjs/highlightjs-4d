@@ -8,7 +8,7 @@ module.exports = function(hljs) {
 
   var KEYWORDS = {
     className: 'keyword',
-    begin: '[\\s]*\\b(Begin SQL|End SQL|For each|End for each|If|Else|End if|Case of|End case|For|End for|Use|End use|While|End while|Repeat|Until)\\b'
+    begin: '[\\s]*\\b(Begin SQL|End SQL|For each|End for each|If|Else|End if|Case of|End case|For|End for|Use|End use|While|End while|Repeat|Until|Class extends|Class constructor|Function)\\b'
   };
   
   var LITERALS = {
@@ -35,10 +35,7 @@ module.exports = function(hljs) {
 
   var NUMBERS = {
     className: 'number',
-    variants: [
-      { begin: '(-?)\\b([\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)' },
-      { begin: '(-?)(\\b0[xX][a-fA-F0-9\']+|(\\b[\\d\']+(\\.[\\d\']*)?|\\.[\\d\']+)([eE][-+]?[\\d\']+)?)' }
-    ],  
+    begin: '(-?)(\\b0[xX][a-fA-F0-9]+|(\\b[\\d]+(\\.[\\d]*)?|\\.[\\d]+)([eE][-+]?[\\d]+)?)(?!D)'
   };
 
   var VARIABLE = {
