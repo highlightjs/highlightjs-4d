@@ -18,7 +18,7 @@ module.exports = function(hljs) {
 
   var FUNCTIONS = {
     className: 'function',
-    begin: '\\w[\\w ]+\\w(?=\\()',
+    begin: '[^\\s].+(?=\\()',
   }
 
   var DATE = {
@@ -37,23 +37,20 @@ module.exports = function(hljs) {
     className: 'number',
     begin: '(-?)(\\b0[xX][a-fA-F0-9]+|(\\b[\\d]+(\\.[\\d]*)?|\\.[\\d]+)([eE][-+]?[\\d]+)?)(?!D)'
   };
-
+  //Does not support unicode characters (should be replaced by \p{L} when possible)
   var VARIABLE = {
     className: 'variable',
-    begin: '[\\w]+',
-    end: '(?!\\w)|$'
+    begin: '[^:\\(\\)*\\/\\|\\.=\\$\\<\\>\\#\\\'\\[\\]\"\\-\\!\\%\\&\\~\\+\\,\\;\\s]+'
   }
 
   var LOCAL_VARIABLE = {
     className: 'variable',
-    begin: '\\$',
-    end: VARIABLE.end
+    begin: '\\$' + VARIABLE.begin,
   }
 
   var INTERPROCESS_VARIABLE = {
     className: 'variable',
-    begin: '<>',
-    end: VARIABLE.end
+    begin: '<>'+ VARIABLE.begin,
   }
 
   var STRINGS = {
