@@ -40,7 +40,7 @@ module.exports = function(hljs) {
   //Does not support unicode characters (should be replaced by \p{L} when possible)
   var VARIABLE = {
     className: 'variable',
-    begin: '[^:\\(\\)*\\/\\|\\.=\\$\\<\\>\\#\\\'\\[\\]\"\\-!%&~]+'
+    begin: '[^:\\(\\)*\\/\\|\\.=\\$\\<\\>\\#\\\'\\[\\]\"\\-\\!\\%\\&\\~\\+\\,\\;\\s]+'
   }
 
   var LOCAL_VARIABLE = {
