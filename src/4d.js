@@ -5,6 +5,8 @@ Website: https://www.4d.com
 */
 
 module.exports = function(hljs) {
+  //Does not support unicode characters (should be replaced by \p{L} when possible)
+  var unicodeWord = '^:\\(\\)*\\/\\|\\.=\\$\\<\\>\\#\\\'\\[\\]\"\\-\\!\\%\\&\\~\\+\\,\\;\\n\\r'
 
   var KEYWORDS = {
     className: 'keyword',
@@ -18,7 +20,7 @@ module.exports = function(hljs) {
 
   var FUNCTIONS = {
     className: 'function',
-    begin: '[^\\s].+(?=\\()',
+    begin: '[' + unicodeWord+']+['+unicodeWord+'\\s]+[' + unicodeWord + '](?=\\()',
   }
 
   var DATE = {
@@ -32,15 +34,13 @@ module.exports = function(hljs) {
     begin: '\\?[0-9]+',
     end: '\\?'
   }
-
   var NUMBERS = {
     className: 'number',
     begin: '(-?)(\\b0[xX][a-fA-F0-9]+|(\\b[\\d]+(\\.[\\d]*)?|\\.[\\d]+)([eE][-+]?[\\d]+)?)(?!D)'
   };
-  //Does not support unicode characters (should be replaced by \p{L} when possible)
   var VARIABLE = {
     className: 'variable',
-    begin: '[^:\\(\\)*\\/\\|\\.=\\$\\<\\>\\#\\\'\\[\\]\"\\-\\!\\%\\&\\~\\+\\,\\;\\s]+'
+    begin: '[' + unicodeWord + ']+'
   }
 
   var LOCAL_VARIABLE = {
