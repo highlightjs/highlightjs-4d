@@ -13,7 +13,7 @@
 <script type="text/javascript" charset="UTF-8"
   src="/path/to/highlightjs-4d/dist/4d.min.js"></script>
 <script type="text/javascript">
-  hljs.initHighlightingOnLoad();
+  hljs.highlightAll();
 </script>
 ```
 
@@ -35,5 +35,5 @@ var hljs = require('highlightjs');
 var hljs4d = require('highlightjs-4d');
 
 hljs.registerLanguage("4d", hljs4d);
-hljs.initHighlightingOnLoad();
+hljs.highlightAll();
 ```
