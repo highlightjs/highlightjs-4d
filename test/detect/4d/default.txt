@@ -1,0 +1,11 @@
+#DECLARE($folder : 4D.Folder; $path : Text) -> $content : Text
+
+var $test : Variant
+var $object : Object:=Null || {}
+
+If ($object#Null)
+    ALERT("NULL")
+
+End if
+
+return $folder.file($path).getText()

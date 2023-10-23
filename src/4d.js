@@ -4,64 +4,81 @@ Author: Guillaume Kotulski <guillaume.kotulski@4d.com>
 Website: https://www.4d.com
 */
 
-module.exports = function(hljs) {
+module.exports = function (hljs) {
   //Does not support unicode characters (should be replaced by \p{L} when possible)
-  var unicodeWord = '^:\\(\\)*\\/\\|\\.=\\$\\<\\>\\#\\\'\\[\\]\"\\-\\!\\%\\&\\~\\+\\,\\;\\n\\r'
 
-  var KEYWORDS = {
-    className: 'keyword',
-    begin: '[\\s]*\\b(Begin SQL|End SQL|For each|End for each|If|Else|End if|Case of|End case|For|End for|Use|End use|While|End while|Repeat|Until|Class extends|Class constructor|Function|var)\\b'
-  };
-  
-  var LITERALS = {
-    className: 'literal',
-    begin: '\\b(False|True|Null|Undefined|This)',
-  };
+  const regex = hljs.regex;
 
-  var FUNCTIONS = {
-    className: 'function',
-    begin: '[' + unicodeWord+']+['+unicodeWord+'\\s]+[' + unicodeWord + '](?=\\()',
+  const KEYWORDS = ["Begin SQL", "End SQL", "For each", "End for each", "If", "Else", "End if", "Case of", "End case", "For", "End", "if",
+  "End for", "Use", "End use", "While", "End while", "Repeat", "Until", "Class extends", "Class constructor", "Function", "var", "property", "return", "break", "continue", "#DECLARE"]
+
+  var keywords = {
+    keyword: KEYWORDS,
+    $pattern:/[\w]+/i,
+    literal: ["False", "True", "Null", "Undefined", "This", "Variant", "Integer", "Picture", "Text", "Collection", "Object", "Pointer", "Real", "4D", "cs"]
   }
 
-  var DATE = {
-    className: 'literal',
+  var functions = {
+    scope:'function',
+    begin: '\\.[a-zA-Z0-9]+(?=\\()',
+  }
+
+  const OPERATORS = [/:=/, /\|\|/, /&&/];
+
+  var operator = {
+    scope:'operator',
+    match: regex.either(...OPERATORS)
+  }
+
+  var members = {
+    scope:'property',
+    begin: '\\.[a-zA-Z0-9]+',
+  }
+
+  var commands = {
+    scope: 'function',
+    begin: '[\\p{L}]+(?=\\()',
+  }
+
+  var dates = {
+    scope: 'literal',
     begin: '![0-9]+',
     end: '!'
   }
 
-  var HOUR = {
-    className: 'literal',
+  var hours = {
+    scope: 'literal',
     begin: '\\?[0-9]+',
     end: '\\?'
   }
-  var NUMBERS = {
-    className: 'number',
+  var numbers = {
+    scope: 'number',
     begin: '(-?)(\\b0[xX][a-fA-F0-9]+|(\\b[\\d]+(\\.[\\d]*)?|\\.[\\d]+)([eE][-+]?[\\d]+)?)(?!D)'
   };
-  var VARIABLE = {
-    className: 'variable',
-    begin: '[' + unicodeWord + ']+'
+  var variables = {
+    scope: 'variable',
+    match: regex.either(/\p{L}+/u)
   }
 
-  var LOCAL_VARIABLE = {
-    className: 'variable',
-    begin: '\\$' + VARIABLE.begin,
+  var localVariables = {
+    scope: 'variable',
+    match: regex.either(/\$\p{L}+/u)
   }
 
-  var INTERPROCESS_VARIABLE = {
+  var interprocessVariables = {
     className: 'variable',
-    begin: '<>'+ VARIABLE.begin,
+    begin: '<>' + variables.begin,
   }
 
-  var STRINGS = {
-    className: 'string',
+  var strings = {
+    scope: 'string',
     begin: '"', end: '"',
     illegal: '\\n',
-    contains: [ hljs.BACKSLASH_ESCAPE ],
+    contains: [hljs.BACKSLASH_ESCAPE],
     relevance: 0
   }
 
-  var VARIABLE_ARRAY = {
+  var variablesArray = {
     className: 'variable',
     begin: '\\[{2}',
     end: '\\]{2}'
@@ -71,8 +88,9 @@ module.exports = function(hljs) {
   var INLINE_COMMENT_OLD = hljs.COMMENT('`', '[^\\\\]$');
 
   return {
-    aliases: [ '4d' ],
-    keyword:KEYWORDS,
+    unicodeRegex: true,
+    aliases: ['4d'],
+    keywords: keywords,
     contains: [
       INLINE_COMMENT, // single-line comments
       hljs.C_BLOCK_COMMENT_MODE, // comment blocks
@@ -82,17 +100,17 @@ module.exports = function(hljs) {
         subLanguage: 'sql',
         relevance: 0
       },
-
-      DATE,
-      HOUR,
-      KEYWORDS,
-      INTERPROCESS_VARIABLE,
-      LOCAL_VARIABLE,
-      VARIABLE_ARRAY,
-      STRINGS,
-      NUMBERS,
-      LITERALS,
-      FUNCTIONS,
+      commands,
+      operator,
+      dates,
+      hours,
+      interprocessVariables,
+      localVariables,
+      variablesArray,
+      functions,
+      members,
+      strings,
+      numbers,
     ]
   };
 }
