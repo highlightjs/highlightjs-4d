@@ -14,7 +14,7 @@ module.exports = function (hljs) {
 
   var keywords = {
     keyword: KEYWORDS,
-    $pattern:/[\w]+/i,
+    $pattern:/#?[\w]+/i,
     literal: ["False", "True", "Null", "Undefined", "This", "Variant", "Integer", "Picture", "Text", "Collection", "Object", "Pointer", "Real", "4D", "cs"]
   }
 
@@ -33,11 +33,6 @@ module.exports = function (hljs) {
   var members = {
     scope:'property',
     begin: '\\.[a-zA-Z0-9]+',
-  }
-
-  var commands = {
-    scope: 'function',
-    begin: '[\\p{L}]+(?=\\()',
   }
 
   var dates = {
@@ -100,7 +95,6 @@ module.exports = function (hljs) {
         subLanguage: 'sql',
         relevance: 0
       },
-      commands,
       operator,
       dates,
       hours,
