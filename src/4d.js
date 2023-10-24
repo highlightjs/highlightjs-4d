@@ -9,18 +9,28 @@ module.exports = function (hljs) {
 
   const regex = hljs.regex;
 
-  const KEYWORDS = ["Begin SQL", "End SQL", "For each", "End for each", "If", "Else", "End if", "Case of", "End case", "For", "End", "if",
-  "End for", "Use", "End use", "While", "End while", "Repeat", "Until", "Class extends", "Class constructor", "Function", "var", "property", "return", "break", "continue", "#DECLARE"]
+  const KEYWORDS = ["Begin SQL", "End SQL", "For each", "End for each", 
+  "If", "Else", "End if", "Case of", "End case", "For", "End", "if",
+  "End for", "Use", "End use", "While", 
+  "End while", "Repeat", "Until", "Class extends", 
+  "Class constructor", "Function", "var", 
+  "property", "return", "break", "continue", "DECLARE"]
 
   var keywords = {
     keyword: KEYWORDS,
-    $pattern:/#?[\w]+/i,
+    $pattern:/(\w+)/,
+    relevance:10,
     literal: ["False", "True", "Null", "Undefined", "This", "Variant", "Integer", "Picture", "Text", "Collection", "Object", "Pointer", "Real", "4D", "cs"]
   }
 
   var functions = {
-    scope:'function',
+    scope:'property.function',
     begin: '\\.[a-zA-Z0-9]+(?=\\()',
+  }
+
+  var commands = {
+    scope:'function',
+    begin: '\\b(?!('+KEYWORDS.join('|')+')\\b)((\\p{L}+\\s?)+)(?=\\()',
   }
 
   const OPERATORS = [/:=/, /\|\|/, /&&/];
@@ -51,17 +61,17 @@ module.exports = function (hljs) {
     begin: '(-?)(\\b0[xX][a-fA-F0-9]+|(\\b[\\d]+(\\.[\\d]*)?|\\.[\\d]+)([eE][-+]?[\\d]+)?)(?!D)'
   };
   var variables = {
-    scope: 'variable',
+    scope: 'variable.global',
     match: regex.either(/\p{L}+/u)
   }
 
   var localVariables = {
-    scope: 'variable',
+    scope: 'variable.local',
     match: regex.either(/\$\p{L}+/u)
   }
 
   var interprocessVariables = {
-    className: 'variable',
+    className: 'variable.interprocess',
     begin: '<>' + variables.begin,
   }
 
@@ -74,7 +84,7 @@ module.exports = function (hljs) {
   }
 
   var variablesArray = {
-    className: 'variable',
+    className: 'variable.array',
     begin: '\\[{2}',
     end: '\\]{2}'
   }
@@ -95,6 +105,7 @@ module.exports = function (hljs) {
         subLanguage: 'sql',
         relevance: 0
       },
+      commands,
       operator,
       dates,
       hours,
